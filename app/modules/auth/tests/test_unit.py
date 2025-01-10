@@ -88,6 +88,27 @@ def test_service_create_with_profie_success(clean_database):
     assert UserRepository().count() == 1
     assert UserProfileRepository().count() == 1
 
+def test_service_count_success(clean_database):
+    data = {
+        "name": "Test1",
+        "surname": "Foo1",
+        "email": "service1_test@example.com",
+        "password": "test1234"
+    }
+    AuthenticationService().create_with_profile(**data)
+    assert UserRepository().count() == 1
+    assert UserProfileRepository().count() == 1
+    data = {
+            "name": "Test2",
+            "surname": "Foo2",
+            "email": "service2_test@example.com",
+            "password": "test1234"
+        }
+
+    AuthenticationService().create_with_profile(**data)
+
+    assert UserRepository().count() == 2
+    assert UserProfileRepository().count() == 2
 
 def test_service_create_with_profile_fail_no_email(clean_database):
     data = {
